@@ -15,7 +15,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         python: [true, false]
 
-    name: ${{ matrix.os }} ${{ matrix.python && 'w/' || 'w/o' }} Python
+    name: ${{ startsWith(matrix.os, 'ubuntu') && 'Linux' || 'macOS' }} ${{ matrix.python && 'w/' || 'w/o' }} Python
     runs-on: ${{ matrix.os }}
 
     steps:
