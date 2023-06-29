@@ -45,9 +45,8 @@ jobs:
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: |
-        cmake -B${{github.workspace}}/build -S$GITHUB_WORKSPACE -GNinja \
-          -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-          ${{ matrix.python && '-DPYTHON=yes' || '-DPYTHON=no' }}
+        cmake -B${{github.workspace}}/build -S${{github.workspace}} -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+          -DCMAKE_BUILD_TYPE=$BUILD_TYPE ${{ matrix.python && '-DPYTHON=yes' || '-DPYTHON=no' }}
 
     - name: Build
       working-directory: ${{github.workspace}}/build
