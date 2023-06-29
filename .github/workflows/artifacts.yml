@@ -63,7 +63,7 @@ jobs:
     - name: Packing Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: far2l-release${{ matrix.dependencies }}
+        name: far2l-release_${{ matrix.os }}_${{ matrix.python && 'python' || 'minimal' }}
         path: ${{github.workspace}}/build/install
 
     - name: Test
