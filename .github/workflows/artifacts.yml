@@ -31,7 +31,7 @@ jobs:
 
     - name: macOS Dependencies
       if: startsWith(matrix.os, 'macos')
-      run: brew bundle -v && brew install tree
+      run: brew update && bundle -v && brew install tree
 
     - name: Python macOS Dependency
       if: startsWith(matrix.os, 'macos') && matrix.python
