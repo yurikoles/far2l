@@ -38,7 +38,7 @@ jobs:
       if: startsWith(matrix.os, 'macos')
       run: |
         brew update
-        brew bundle -v
+        brew bundle -v --no-upgrade
         brew install tree
 
     - name: Python macOS Dependency
