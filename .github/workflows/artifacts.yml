@@ -52,17 +52,17 @@ jobs:
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: |
-        cmake -B${{github.workspace}}/build -S${{github.workspace}} -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-          -DCMAKE_BUILD_TYPE=$BUILD_TYPE ${{ matrix.python && '-DPYTHON=yes' || '-DPYTHON=no' }}
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+           ${{ matrix.python && '-DPYTHON=yes' || '-DPYTHON=no' }}
 
     - name: Build
-      working-directory: ${{github.workspace}}/build
+      working-directory: build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
 
     - name: File Tree
-      working-directory: ${{github.workspace}}/build
+      working-directory: build
       shell: bash
       run: tree
 
@@ -70,7 +70,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: far2l-release_${{ matrix.os }}_${{ matrix.python && 'python' || 'minimal' }}
-        path: ${{github.workspace}}/build/install
+        path: build/install
 
     - name: Test
       working-directory: ${{github.workspace}}/build
