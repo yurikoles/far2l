@@ -28,7 +28,7 @@ jobs:
 
     - name: macOS Dependencies
       if: matrix.os == 'macos-latest'
-      run: brew bundle -v
+      run: brew bundle -v && brew install tree
 
     - name: macOS Python Dependency
       if: matrix.config.python
