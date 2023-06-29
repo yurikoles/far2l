@@ -13,12 +13,9 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        include:
-          - os: ubuntu-latest
-            dependencies: "-minimal"
-          - os: ubuntu-latest
-            dependencies: ""
-            options: "-DPYTHON=yes"
+        config:
+          - {python: true}
+          - {python: false}
 
     runs-on: ${{ matrix.os }}
 
@@ -27,11 +24,15 @@ jobs:
 
     - name: Ubuntu Dependencies
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get update ; sudo apt-get -y install $(cat dependencies${{ matrix.dependencies }}.txt)
+      run: sudo apt-get update ; sudo apt-get -y install $(cat dependencies${{ !matrix.config.python && "-minimal" || "" }}.txt)
 
     - name: macOS Dependencies
       if: matrix.os == 'macos-latest'
       run: brew bundle -v
+
+    - name: macOS Python Dependency
+      if: matrix.config.python
+      run: brew install python@3.11
 
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
