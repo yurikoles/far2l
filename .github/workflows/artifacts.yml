@@ -15,25 +15,26 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         python: [true, false]
 
+    name: Build With Python ${{ matrix.python && 'enabled' || 'disabled' }}
     runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v2
 
     - name: Minimal Ubuntu Dependencies
-      if: matrix.os == 'ubuntu-latest' && !matrix.python
+      if: startsWith(matrix.os, 'ubuntu') && !matrix.python
       run: sudo apt-get update ; sudo xargs apt-get -y install < dependencies-minimal.txt
 
     - name: Python Ubuntu Dependencies
-      if: matrix.os == 'ubuntu-latest' && matrix.python
+      if: startsWith(matrix.os, 'ubuntu') && matrix.python
       run: sudo apt-get update ; sudo xargs apt-get -y install < dependencies.txt
 
     - name: macOS Dependencies
-      if: matrix.os == 'macos-latest'
+      if: startsWith(matrix.os, 'macos')
       run: brew bundle -v && brew install tree
 
     - name: Python macOS Dependency
-      if: matrix.python
+      if: startsWith(matrix.os, 'macos') && matrix.python
       run: brew install python@3.11
 
     - name: Create Build Environment
