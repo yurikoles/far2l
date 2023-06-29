@@ -15,7 +15,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         python: [true, false]
 
-    name: Build With Python ${{ matrix.python && 'enabled' || 'disabled' }}
+    name: Build ${{ matrix.python && 'w/' || 'w/o' }} Python
     runs-on: ${{ matrix.os }}
 
     steps:
